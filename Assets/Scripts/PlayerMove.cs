@@ -8,17 +8,19 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private InputAction _jumpAction;
     [SerializeField] private float _jumpSpeed = 5.0f;
     [SerializeField] private LayerMask _groundLayer;
-
-    private const float VelocityDeadZone = 0.05f;
-    private bool _jumpRequested;
+    [SerializeField] private float _checkGroundDistance = 1.1f;
+    [SerializeField] private float _moveSpeed = 3.0f;  
     
-    [Header("Move Settings")]
-    [SerializeField] private float _moveSpeed = 3.0f;    
+    
+    private const float VelocityDeadZone = 0.05f;
+    private bool _isGround ;
+    private float _jumpTimer = 1.5f;
+    
 
     private Animator _animator;
     private Rigidbody _rigidbody;
-    private Transform _transform;
     private Vector2 _moveInput;
+    private Collider _collider;
 
     private readonly int _speed = Animator.StringToHash("Speed");
     private readonly int _jump = Animator.StringToHash("VerticalSpeed");
@@ -42,13 +44,17 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         Animate();
+        IsGround();
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate() // 점프할 때 체집이 안되게 
     {
-        Move();
-        Turn();
-        OnJump();
+        if (_isGround)
+        {
+            Move();
+            Turn();
+            OnJump();  
+        }
     }
 
     private void BindInputEvent()
@@ -62,6 +68,16 @@ public class PlayerMove : MonoBehaviour
     {
         _moveAction.performed -= OnMove;
         _moveAction.canceled -= OnMove;
+    }
+
+    private void IsGround()
+    {
+        Vector3 origin =  _collider.bounds.center;
+        if (Physics.Raycast(origin, Vector3.down, _checkGroundDistance, _groundLayer.value))
+        {
+            Debug.DrawRay(origin, Vector3.down * _checkGroundDistance, Color.red);
+            _isGround =  true;
+        }
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -90,7 +106,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        float yaw = _moveInput.x > 0f ? 90f : -90f;
+        float yaw = _moveInput.x > 0f ? 90f : -90f;  //90도 만큼 회전
         _rigidbody.MoveRotation(Quaternion.Euler(0f, yaw, 0f));
     }
 
@@ -112,6 +128,6 @@ public class PlayerMove : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-        _transform = transform;
+        _collider = GetComponent<CapsuleCollider>();
     }
 }
