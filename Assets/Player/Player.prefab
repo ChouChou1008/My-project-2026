@@ -393,7 +393,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4346196875501728706}
   - component: {fileID: 7687899459447728568}
-  - component: {fileID: 4970233477901236871}
   - component: {fileID: 7486009464302530335}
   m_Layer: 0
   m_Name: Player
@@ -441,73 +440,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4970233477901236871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3970797919363213688}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec191461bbbabcd489f6fc23939f9167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
-  _moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a8187ff3-3685-4385-9c15-c0b963633229
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 2D Vector
-      m_Id: 53a0f90a-bfdf-4510-9f7d-99bb20f5d58c
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 4
-    - m_Name: left
-      m_Id: 6777af74-49c2-4de2-9380-7f6afc5d67b0
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: right
-      m_Id: e4486c22-6128-48e3-b60e-6a6a29196b70
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    m_Flags: 0
-  _jumpAction:
-    m_Name: Jump
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: aef307ef-aaaf-43d3-80a9-a4406b5759dc
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 4e4c60b7-7a75-4e5b-97f8-b4a950076ea1
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Jump
-      m_Flags: 0
-    m_Flags: 0
-  _jumpSpeed: 5
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _moveSpeed: 3
 --- !u!136 &7486009464302530335
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -525,7 +457,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.18
   m_Height: 1.24

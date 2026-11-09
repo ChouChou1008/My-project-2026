@@ -10,7 +10,7 @@ namespace ForestWhispers.Game
     /// 가까운 채집물을 찾아 표시하고, E 키(또는 PressGather)로 채집한다.
     /// 채집 중에는 이동 스크립트를 꺼서 움직이지 못하게 한다. Player 루트에 붙인다.
     /// </summary>
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody))]
     public class PlayerGather : MonoBehaviour
     {
         [Header("Gather Settings")]
@@ -20,11 +20,10 @@ namespace ForestWhispers.Game
 
         [Header("Reference Settings")]
         [SerializeField] private MonoBehaviour _movement;
-        [SerializeField] private Transform _model;
         [SerializeField] private float _rightYaw = 90f;
 
         private Transform _transform;
-        private Rigidbody2D _rigidbody;
+        private Rigidbody _rigidbody;
         private GatherPose _pose;
         private GatherItem _nearestItem;
         private bool _isGathering;
@@ -57,7 +56,7 @@ namespace ForestWhispers.Game
         private void CacheComponent()
         {
             _transform = transform;
-            _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody = GetComponent<Rigidbody>();
             _pose = GetComponentInChildren<GatherPose>();
         }
 
@@ -121,16 +120,7 @@ namespace ForestWhispers.Game
 
         private bool IsStanding()
         {
-            return Mathf.Abs(GetVerticalSpeed()) < _maxVerticalSpeed;
-        }
-
-        private float GetVerticalSpeed()
-        {
-#if UNITY_6000_0_OR_NEWER
-            return _rigidbody.linearVelocity.y;
-#else
-            return _rigidbody.velocity.y;
-#endif
+            return Mathf.Abs(GetVelocity().y) < _maxVerticalSpeed;
         }
 
         private IEnumerator Gather(GatherItem item)
@@ -159,7 +149,14 @@ namespace ForestWhispers.Game
         private void SetLocked(bool isLocked)
         {
             _isGathering = isLocked;
-            _rigidbody.simulated = !isLocked;
+
+            if (isLocked)
+            {
+                SetVelocity(Vector3.zero);      // 미끄러지지 않게 먼저 멈춤
+            }
+
+            _rigidbody.isKinematic = isLocked;  // 3D에는 simulated가 없어 isKinematic으로 물리 정지
+
             if (_movement != null)
             {
                 _movement.enabled = !isLocked;
@@ -168,13 +165,28 @@ namespace ForestWhispers.Game
 
         private void FaceItem(GatherItem item)
         {
-            if (_model == null)
-            {
-                return;
-            }
-
+            // PlayerMove가 루트를 회전시키므로 채집도 루트를 회전 (모델만 돌리면 이후 방향이 어긋남)
             float direction = item.transform.position.x >= _transform.position.x ? 1f : -1f;
-            _model.rotation = Quaternion.Euler(0f, _rightYaw * direction, 0f);
+            _transform.rotation = Quaternion.Euler(0f, _rightYaw * direction, 0f);
+        }
+
+        // Unity 6부터 Rigidbody.velocity → linearVelocity 로 이름 변경
+        private Vector3 GetVelocity()
+        {
+#if UNITY_6000_0_OR_NEWER
+            return _rigidbody.linearVelocity;
+#else
+            return _rigidbody.velocity;
+#endif
+        }
+
+        private void SetVelocity(Vector3 velocity)
+        {
+#if UNITY_6000_0_OR_NEWER
+            _rigidbody.linearVelocity = velocity;
+#else
+            _rigidbody.velocity = velocity;
+#endif
         }
     }
 }
