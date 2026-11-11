@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MushroomYellowData
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   _itemName: "\uBC84\uC12F"
-  _itemSprite: {fileID: 0}
+  _itemSprite: {fileID: 21300086, guid: 374e0445c78ff8a498aa23d396168720, type: 3}
   _itemGrade: 0
-  _itemPrice: 0
+  _itemPrice: 3

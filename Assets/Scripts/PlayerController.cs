@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputAction _jumpAction;
     [SerializeField] private InputAction _gatherAction; 
     [SerializeField] private InputAction _speedUpAction;
+    [SerializeField] private InputAction _openInventoryAction;
 
     [Header("Move Settings")]
     [SerializeField] private float _moveSpeed = 2.0f;
@@ -24,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _gatherTimer = 1.8f; //채집하는 시간
     
     
+    [SerializeField] private Inventory _inventory;
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private Canvas _inventoryMaxcanvas;
     
     private float _gatherTime = -1f;
     private bool IsGathering => _gatherTime > 0f;
@@ -34,15 +39,16 @@ public class PlayerController : MonoBehaviour
     private readonly int _isGroundedHash = Animator.StringToHash("IsGrounded");
     private readonly int _gatherHash = Animator.StringToHash("Gather");
 
+    private Coroutine _fullMessageCoroutine;
     private Animator _animator;
     private Rigidbody _rigidbody;
     private Collider _collider;
     private Vector2 _moveInput;
     private ItemDetector _itemDetector;
     
-    
     private bool _isGround;
     private bool _isJumpRequested;
+    private bool _openInventory;
     
 
     private void Awake()
@@ -55,6 +61,7 @@ public class PlayerController : MonoBehaviour
         _moveAction.Enable();
         _speedUpAction.Enable();
         _jumpAction.Enable();
+        _openInventoryAction.Enable();
         ItemDetector.OnCheckGather += OnItemCheckGather;
         BindInputEvent();
     }
@@ -64,6 +71,7 @@ public class PlayerController : MonoBehaviour
         _moveAction.Disable();
         _speedUpAction.Disable();
         _jumpAction.Disable();
+        _openInventoryAction.Disable();
         ItemDetector.OnCheckGather -= OnItemCheckGather;
         UnbindInputEvent();
         ResetInput();                       // 채집 등으로 꺼질 때 남은 입력 제거
@@ -75,6 +83,7 @@ public class PlayerController : MonoBehaviour
         ReadGather();
         UpdateGather();
         ReadJumpInput();
+        OpenInventory();
         Animate();
     }
 
@@ -108,16 +117,54 @@ public class PlayerController : MonoBehaviour
         _moveAction.performed -= OnMove;
         _moveAction.canceled -= OnMove;
     }
+
+    private void OpenInventory()
+    {
+        if (_openInventoryAction.WasPressedThisFrame())
+        {
+            if (_canvas.gameObject.activeSelf)
+            {
+                _canvas.gameObject.SetActive(false);
+            }
+            else
+            {
+                _canvas.gameObject.SetActive(true);
+            }
+        }
+    }
     
     private void ReadGather()
     {
         if (!_gatherAction.WasPressedThisFrame()) return;
         if (IsGathering || !_isGround) return;
+        if (_inventory.IsFull)
+        {
+            FullMessage();
+            return;
+        }
         StartGather();      
         
     }
 
-    private void OnItemCheckGather(ItemDetector item)
+    private void FullMessage()
+    {
+        if (_fullMessageCoroutine != null)
+        {
+            StopCoroutine(_fullMessageCoroutine);
+        }
+
+        _fullMessageCoroutine = StartCoroutine(StartCanvas());
+    }
+
+    private IEnumerator StartCanvas()
+    {
+       _inventoryMaxcanvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        _inventoryMaxcanvas.gameObject.SetActive(false);
+        _fullMessageCoroutine = null;
+    }
+
+    private void OnItemCheckGather(ItemDetector item)  //감지되고 활성화
     {
         if (IsGathering) return;
         if (item.IsCheckGather)
@@ -133,8 +180,6 @@ public class PlayerController : MonoBehaviour
         _gatherAction.Disable();
     }
     
-    
-    
 
     private void StartGather()
     {
@@ -142,7 +187,6 @@ public class PlayerController : MonoBehaviour
         _isJumpRequested = false;
         _animator.SetTrigger(_gatherHash);
         StopHorizontal();
-        Debug.Log("아이템 획득");
     }
 
     private void UpdateGather()
@@ -153,6 +197,8 @@ public class PlayerController : MonoBehaviour
         if (_itemDetector == null) return;
         Debug.Log($"획득한 아이템: {_itemDetector.name}");
         Destroy(_itemDetector.gameObject);
+        Item item = _itemDetector.GetComponent<Item>();
+        _inventory.TryAdd(item.Data);
         _itemDetector = null;             
         _gatherAction.Disable();   
     }
@@ -162,7 +208,6 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = _rigidbody.linearVelocity;
         velocity.x = 0f;
         _rigidbody.linearVelocity = velocity;
-        
     }
     
 

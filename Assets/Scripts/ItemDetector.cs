@@ -7,7 +7,10 @@ using UnityEngine.Events;
 public class ItemDetector : MonoBehaviour 
 {
     [SerializeField] private LayerMask _playerMask;
+    
+    
     private bool _isCheckGather;
+    
     public bool  IsCheckGather=>_isCheckGather;
 
     public static event Action<ItemDetector> OnCheckGather;
