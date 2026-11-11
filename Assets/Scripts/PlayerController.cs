@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -27,8 +29,9 @@ public class PlayerController : MonoBehaviour
     
     
     [SerializeField] private Inventory _inventory;
-    [SerializeField] private Canvas _canvas;
+    [SerializeField] private GameObject _canvas;
     [SerializeField] private Canvas _inventoryMaxcanvas;
+    [SerializeField] private Image _image;
     
     private float _gatherTime = -1f;
     private bool IsGathering => _gatherTime > 0f;
@@ -54,6 +57,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         CacheComponent();
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void OnEnable()
@@ -159,9 +167,16 @@ public class PlayerController : MonoBehaviour
     private IEnumerator StartCanvas()
     {
        _inventoryMaxcanvas.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        _inventoryMaxcanvas.gameObject.SetActive(false);
-        _fullMessageCoroutine = null;
+       float t  = Time.time + 3f;
+       Color color = _image.color;
+       while (Time.time <= t)
+       {
+           yield return null;
+           color.a = Mathf.Clamp01(t - Time.time);
+           _image.color = color;   
+       }
+       _inventoryMaxcanvas.gameObject.SetActive(false);
+       _fullMessageCoroutine = null;
     }
 
     private void OnItemCheckGather(ItemDetector item)  //감지되고 활성화
