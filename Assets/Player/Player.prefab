@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 4346196875501728706}
   - component: {fileID: 7687899459447728568}
   - component: {fileID: 7486009464302530335}
+  - component: {fileID: 6307516192026070342}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -409,9 +410,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3970797919363213688}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.1926701, y: -0.93974, z: 3.18897}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4674769763876643676}
@@ -431,7 +432,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: e100077ce941b674faa39d3c95a52bcb, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -463,6 +464,26 @@ CapsuleCollider:
   m_Height: 1.24
   m_Direction: 1
   m_Center: {x: 0, y: 0.52, z: 0}
+--- !u!114 &6307516192026070342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970797919363213688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8a52e7bdffce764685ba85081230973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForestWhispers.Game.GatherPose
+  _downTime: 0.4
+  _pickTime: 0.3
+  _liftTime: 0.4
+  _upTime: 0.35
+  _crouchDepth: 0.42
+  _bendAngle: 32
+  _stepLength: 0.22
+  _armReach: 0.7
 --- !u!1 &4158679626570599222
 GameObject:
   m_ObjectHideFlags: 0
