@@ -5,19 +5,19 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [field: SerializeField]  public int MaxSize { get;private set; } = 20;
-    [SerializeField] private CheckItem  _checkItem;
+
     
-    private List<ItemData> _items;
+    private List<Item> _items;
     private int _count;
     
     public event Action OnTryAdd;
     
     private void Awake()
     {
-        _items = new List<ItemData>(MaxSize);
+        _items = new List<Item>(MaxSize);
     }
     
-    public bool TryAdd(ItemData item) 
+    public bool TryAdd(Item item) 
     {
         if ((_items == null) || (_items.Count >= MaxSize))
         {
