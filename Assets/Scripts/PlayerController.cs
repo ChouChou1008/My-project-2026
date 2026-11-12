@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Animations;
 using UnityEngine.Rendering;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -48,21 +50,18 @@ public class PlayerController : MonoBehaviour
     private Collider _collider;
     private Vector2 _moveInput;
     private ItemDetector _itemDetector;
+    private Transform _transform;
     
     private bool _isGround;
     private bool _isJumpRequested;
-    private bool _openInventory;
+
     
 
     private void Awake()
     {
         CacheComponent();
     }
-
-    private void Start()
-    {
-        
-    }
+    
 
     private void OnEnable()
     {
@@ -80,6 +79,7 @@ public class PlayerController : MonoBehaviour
         _speedUpAction.Disable();
         _jumpAction.Disable();
         _openInventoryAction.Disable();
+        _gatherAction.Disable();
         ItemDetector.OnCheckGather -= OnItemCheckGather;
         UnbindInputEvent();
         ResetInput();                       // 채집 등으로 꺼질 때 남은 입력 제거
@@ -128,17 +128,9 @@ public class PlayerController : MonoBehaviour
 
     private void OpenInventory()
     {
-        if (_openInventoryAction.WasPressedThisFrame())
-        {
-            if (_canvas.gameObject.activeSelf)
-            {
-                _canvas.gameObject.SetActive(false);
-            }
-            else
-            {
-                _canvas.gameObject.SetActive(true);
-            }
-        }
+        if (!_openInventoryAction.WasPressedThisFrame()) return;
+        
+        _canvas.SetActive(!_canvas.activeSelf);
     }
     
     private void ReadGather()
@@ -169,6 +161,8 @@ public class PlayerController : MonoBehaviour
        _inventoryMaxcanvas.gameObject.SetActive(true);
        float t  = Time.time + 3f;
        Color color = _image.color;
+       color.a = 1f;
+       _image.color = color;
        while (Time.time <= t)
        {
            yield return null;
@@ -198,6 +192,7 @@ public class PlayerController : MonoBehaviour
 
     private void StartGather()
     {
+        FaceGatherTarget();
         _gatherTime = _gatherTimer;
         _isJumpRequested = false;
         _animator.SetTrigger(_gatherHash);
@@ -210,12 +205,34 @@ public class PlayerController : MonoBehaviour
         _gatherTime -= Time.deltaTime;
         if (IsGathering) return;
         if (_itemDetector == null) return;
-        Debug.Log($"획득한 아이템: {_itemDetector.name}");
-        Destroy(_itemDetector.gameObject);
+        
         Item item = _itemDetector.GetComponent<Item>();
-        _inventory.TryAdd(item.Data);
-        _itemDetector = null;             
-        _gatherAction.Disable();   
+        if (!_inventory.TryAdd(item.Data))
+        {
+            FullMessage();
+            ClearGatherTarget();
+            return;
+        }
+        Debug.Log($"획득한 아이템: {_itemDetector.name}");
+        ReturnGatheredItem();
+        ClearGatherTarget();
+    }
+
+    private void ReturnGatheredItem()
+    {
+        Items poolItem = _itemDetector.GetComponent<Items>();
+        if (poolItem == null)
+        {
+            Destroy(_itemDetector.gameObject);
+            return;
+        }
+        poolItem.OnReturnToPool();
+    }
+
+    private void ClearGatherTarget()
+    {
+        _itemDetector = null;
+        _gatherAction.Disable();
     }
     
     private void StopHorizontal()
@@ -270,8 +287,24 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float yaw = _moveInput.x > 0f ? 0f: 180f;
-        _rigidbody.rotation = Quaternion.Euler(0f, yaw, 0f);
+        FaceDirection(_moveInput.x);
+    }
+
+    private void FaceDirection(float directionX)
+    {
+        float yaw = directionX > 0f ? 0f : 180f;
+        _rigidbody.rotation = Quaternion.Euler(0, yaw, 0f);
+    }
+
+    private void FaceGatherTarget()
+    {
+        float directionX = _itemDetector.transform.position.x - _rigidbody.position.x;
+
+        if (Mathf.Abs(directionX) < 0.05f)
+        {
+            return;
+        }
+        FaceDirection(directionX);
     }
 
     private void Jump()
@@ -315,5 +348,6 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<CapsuleCollider>();
+        _transform = GetComponent<Transform>();
     }
 }

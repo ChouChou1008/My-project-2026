@@ -14,7 +14,12 @@ public class ItemDetector : MonoBehaviour
     public bool  IsCheckGather=>_isCheckGather;
 
     public static event Action<ItemDetector> OnCheckGather;
-    
+
+    private void OnDisable()
+    {
+        _isCheckGather = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if((_playerMask.value & (1 << other.gameObject.layer)) != 0)

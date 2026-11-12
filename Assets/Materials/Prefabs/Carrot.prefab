@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 8037215969777890141}
   - component: {fileID: 6120076284670948438}
   - component: {fileID: 3663977464795951818}
-  - component: {fileID: 6158766741649879877}
   - component: {fileID: 7540169998621281238}
-  m_Layer: 0
+  - component: {fileID: -1217634657087329146}
+  - component: {fileID: 3242407440819234657}
+  - component: {fileID: 9179605939279335239}
+  m_Layer: 7
   m_Name: Carrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,21 +94,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6158766741649879877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2360770366199358659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 857d1f197e6af2d4cbb64e41e30b164b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDetector
-  _playerMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!135 &7540169998621281238
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -126,5 +113,45 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.9
+  m_Radius: 0.6
   m_Center: {x: 0, y: 0.37983736, z: 0}
+--- !u!114 &-1217634657087329146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360770366199358659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f3654eb4469aa4589fe1da9b01f18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Items
+--- !u!114 &3242407440819234657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360770366199358659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9b3ab9985179244b5416c448683082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  _itemData: {fileID: 11400000, guid: 72c2fc03b9b15364f80cb68eca3730ba, type: 2}
+--- !u!114 &9179605939279335239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360770366199358659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 857d1f197e6af2d4cbb64e41e30b164b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDetector
+  _playerMask:
+    serializedVersion: 2
+    m_Bits: 8

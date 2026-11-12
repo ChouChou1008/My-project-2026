@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8203659735550955681}
   - component: {fileID: 7987124176054077157}
   - component: {fileID: 7046248168571530336}
+  - component: {fileID: 4072827587705622836}
+  - component: {fileID: -2756580218149514640}
   m_Layer: 7
   m_Name: MushroomYellow
   m_TagString: Untagged
@@ -111,7 +113,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.9
+  m_Radius: 0.65
   m_Center: {x: -0.012461245, y: 0.33807647, z: 0.03540191}
 --- !u!114 &7046248168571530336
 MonoBehaviour:
@@ -128,3 +130,28 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &4072827587705622836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897696716242088711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f3654eb4469aa4589fe1da9b01f18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Items
+--- !u!114 &-2756580218149514640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897696716242088711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9b3ab9985179244b5416c448683082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  _itemData: {fileID: 11400000, guid: 08582149360014442a0ddb0c0fb35d9d, type: 2}
