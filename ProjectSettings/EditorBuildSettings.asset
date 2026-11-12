@@ -6,8 +6,44 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/1.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers_Map2D/Scenes/01_Village.unity
+    guid: 9235310e8cfbfc144a1979fd69f8daa7
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers_Map2D/Scenes/02_ShallowForest.unity
+    guid: 54ffb67c22ea8ca499a3e9a50a2347af
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers_Map2D/Scenes/03_DeepForest.unity
+    guid: 8c05b02a501c6b3438c3501c9c383409
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers_Map2D/Scenes/04_DeeperForest.unity
+    guid: 785fef8f8127a7144b4700806888d243
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers_Map2D/Scenes/05_LakeForest.unity
+    guid: 8581a4573673be6449008d27aaba973f
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers_Map2D/Scenes/06_AncientRuins.unity
+    guid: 560cdb7237ca28f4b86c12f7f8cbde39
+  - enabled: 1
+    path: Assets/Scenes/TestSence.unity
+    guid: d225cb70b09770d42ba1a6004204b38f
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers/Scenes/02_ShallowForest.unity
+    guid: df0b4a59de15f8048a792c2663d76c81
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers/Scenes/03_MiddleForest.unity
+    guid: bb22d026f94dde14297f1dd5c7f5e49c
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers/Scenes/04_DeepForest.unity
+    guid: 4368b984fc1c8d24fb0369796bda2137
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers/Scenes/05_CrimsonForest.unity
+    guid: df3b0e2622c89dd4898c6a3f2720a92b
+  - enabled: 1
+    path: Assets/Imports/ForestWhispers/Scenes/06_ElvenForest.unity
+    guid: f900304fdeb36c346880dd53494c40b1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
