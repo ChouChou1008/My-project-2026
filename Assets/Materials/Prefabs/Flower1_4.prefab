@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3003193476118401717}
   - component: {fileID: -1899716107101360773}
   - component: {fileID: -5363772425496205532}
-  - component: {fileID: 8337852386495836208}
+  - component: {fileID: 6902865414068185854}
   m_Layer: 7
   m_Name: Flower1_4
   m_TagString: Untagged
@@ -134,13 +134,16 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 8
---- !u!135 &8337852386495836208
-SphereCollider:
+--- !u!70 &6902865414068185854
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3033772034318358290}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -149,9 +152,22 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.4
-  m_Center: {x: 0.0000003054738, y: 0.017425999, z: 0.0000003054738}
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0000003054738, y: 0.017425999}
+  m_Size: {x: 0.47, y: 0.034851998}
+  m_Direction: 0

@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 8037215969777890141}
   - component: {fileID: 6120076284670948438}
   - component: {fileID: 3663977464795951818}
-  - component: {fileID: 7540169998621281238}
   - component: {fileID: -1217634657087329146}
   - component: {fileID: 3242407440819234657}
   - component: {fileID: 9179605939279335239}
+  - component: {fileID: 142732168632943128}
   m_Layer: 7
   m_Name: Carrot
   m_TagString: Untagged
@@ -94,27 +94,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7540169998621281238
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2360770366199358659}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.6
-  m_Center: {x: 0, y: 0.37983736, z: 0}
 --- !u!114 &-1217634657087329146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +134,40 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!70 &142732168632943128
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360770366199358659}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.44}
+  m_Size: {x: 0.72, y: 0.95}
+  m_Direction: 0

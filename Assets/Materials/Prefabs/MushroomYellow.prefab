@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 9130480803371121862}
   - component: {fileID: 9035096328444744797}
   - component: {fileID: 8203659735550955681}
-  - component: {fileID: 7987124176054077157}
   - component: {fileID: 7046248168571530336}
   - component: {fileID: 4072827587705622836}
   - component: {fileID: -2756580218149514640}
+  - component: {fileID: 4867789092614146658}
   m_Layer: 7
   m_Name: MushroomYellow
   m_TagString: Untagged
@@ -94,27 +94,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7987124176054077157
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8897696716242088711}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.65
-  m_Center: {x: -0.012461245, y: 0.33807647, z: 0.03540191}
 --- !u!114 &7046248168571530336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +134,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   _itemData: {fileID: 11400000, guid: 08582149360014442a0ddb0c0fb35d9d, type: 2}
+--- !u!70 &4867789092614146658
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897696716242088711}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.3}
+  m_Size: {x: 1.35, y: 0.0001}
+  m_Direction: 0

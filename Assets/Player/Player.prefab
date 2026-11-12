@@ -393,8 +393,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4346196875501728706}
   - component: {fileID: 7687899459447728568}
-  - component: {fileID: 7486009464302530335}
-  - component: {fileID: 6307516192026070342}
+  - component: {fileID: 7727616027873439098}
+  - component: {fileID: 2026018341391520672}
+  - component: {fileID: 6934071999780789758}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -441,13 +442,43 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &7486009464302530335
-CapsuleCollider:
+--- !u!50 &7727616027873439098
+Rigidbody2D:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3970797919363213688}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &2026018341391520672
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970797919363213688}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -456,15 +487,26 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.18
-  m_Height: 1.24
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.52, z: 0}
---- !u!114 &6307516192026070342
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
+--- !u!114 &6934071999780789758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -473,17 +515,123 @@ MonoBehaviour:
   m_GameObject: {fileID: 3970797919363213688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8a52e7bdffce764685ba85081230973, type: 3}
+  m_Script: {fileID: 11500000, guid: ec191461bbbabcd489f6fc23939f9167, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ForestWhispers.Game.GatherPose
-  _downTime: 0.4
-  _pickTime: 0.3
-  _liftTime: 0.4
-  _upTime: 0.35
-  _crouchDepth: 0.42
-  _bendAngle: 32
-  _stepLength: 0.22
-  _armReach: 0.7
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
+  _moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 6e683d26-60c2-4c09-b741-b1d53b893588
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 26398164-c904-4bd3-9e0a-4da1be6f806f
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 4
+    - m_Name: left
+      m_Id: 2e256fea-0a9b-45b0-911b-f72dc3c69883
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: right
+      m_Id: f259a71f-2768-4fd0-91f3-51a8fddc2c43
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    m_Flags: 0
+  _jumpAction:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7f41db78-78a1-4c86-8cd4-60fc570b458c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 3c4911dd-8eb7-49c0-9ee8-ca60c7912e05
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
+      m_Flags: 0
+    m_Flags: 0
+  _gatherAction:
+    m_Name: Gather
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ad9f333a-f093-4f49-9708-04ffbd71f7cd
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: c7aa8bf1-91b8-48fa-a6be-3c1da89831a7
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Gather
+      m_Flags: 0
+    m_Flags: 0
+  _speedUpAction:
+    m_Name: Speed Up
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fcdc0e7a-b476-41b6-9d33-f72524252d20
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 4107e1e6-27f2-4fba-a15c-c2f51ea1e66a
+      m_Path: <Keyboard>/shift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Speed Up
+      m_Flags: 0
+    m_Flags: 0
+  _openInventoryAction:
+    m_Name: Open Inventory
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 22d57929-a657-4fac-93a0-fba0c42270db
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 090e0e73-6adf-4918-9533-126165c17926
+      m_Path: <Keyboard>/b
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Open Inventory
+      m_Flags: 0
+    m_Flags: 0
+  _moveSpeed: 3
+  _runSpeed: 4
+  _jumpSpeed: 5
+  _model: {fileID: 0}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _checkGroundDistance: 0.4
+  _gatherTimer: 1.8
+  _inventory: {fileID: 0}
+  _canvas: {fileID: 0}
+  _inventoryMaxcanvas: {fileID: 0}
+  _image: {fileID: 0}
 --- !u!1 &4158679626570599222
 GameObject:
   m_ObjectHideFlags: 0
