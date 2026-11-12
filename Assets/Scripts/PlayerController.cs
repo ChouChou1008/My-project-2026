@@ -1,40 +1,35 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Input Settings")]
     [SerializeField] private InputAction _moveAction;
     [SerializeField] private InputAction _jumpAction;
-    [SerializeField] private InputAction _gatherAction; 
+    [SerializeField] private InputAction _gatherAction;
     [SerializeField] private InputAction _speedUpAction;
     [SerializeField] private InputAction _openInventoryAction;
-
-    [Header("Move Settings")]
+    
     [SerializeField] private float _moveSpeed = 2.0f;
     [SerializeField] private float _runSpeed = 4.0f;
     [SerializeField] private float _jumpSpeed = 5.0f;
+    [SerializeField] private Transform _model;                   // 좌우로 돌릴 모델 (Visual 또는 Model)
 
-    
+
     [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _checkGroundDistance = 0.1f; 
-    [SerializeField] private float _gatherTimer = 1.8f; //채집하는 시간
-    
+    [SerializeField] private float _checkGroundDistance = 0.1f;
+
+
+    [SerializeField] private float _gatherTimer = 1.8f;          // 채집하는 시간
     
     [SerializeField] private Inventory _inventory;
     [SerializeField] private GameObject _canvas;
     [SerializeField] private Canvas _inventoryMaxcanvas;
     [SerializeField] private Image _image;
-    
-    private float _gatherTime = -1f;
-    private bool IsGathering => _gatherTime > 0f;
+
     private const float VelocityDeadZone = 0.05f;
 
     private readonly int _speedHash = Animator.StringToHash("Speed");
@@ -42,26 +37,21 @@ public class PlayerController : MonoBehaviour
     private readonly int _isGroundedHash = Animator.StringToHash("IsGrounded");
     private readonly int _gatherHash = Animator.StringToHash("Gather");
 
-    private Coroutine _fullMessageCoroutine;
     private Animator _animator;
-    private Rigidbody _rigidbody;
-    private Collider _collider;
+    private Rigidbody2D _rigidbody;
+    private Collider2D _collider;
     private Vector2 _moveInput;
-    private ItemDetector _itemDetector;
-    
+    private ItemDetector _itemDetector;                        // ItemDetector → ItemDetector2D
+    private Coroutine _fullMessageCoroutine;
+
+    private float _gatherTime = -1f;
+    private bool IsGathering => _gatherTime > 0f;
     private bool _isGround;
     private bool _isJumpRequested;
-    private bool _openInventory;
-    
 
     private void Awake()
     {
         CacheComponent();
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void OnEnable()
@@ -70,7 +60,7 @@ public class PlayerController : MonoBehaviour
         _speedUpAction.Enable();
         _jumpAction.Enable();
         _openInventoryAction.Enable();
-        ItemDetector.OnCheckGather += OnItemCheckGather;
+        ItemDetector.OnCheckGather += OnItemCheckGather;       // ItemDetector → ItemDetector2D
         BindInputEvent();
     }
 
@@ -80,9 +70,10 @@ public class PlayerController : MonoBehaviour
         _speedUpAction.Disable();
         _jumpAction.Disable();
         _openInventoryAction.Disable();
-        ItemDetector.OnCheckGather -= OnItemCheckGather;
+        _gatherAction.Disable();
+        ItemDetector.OnCheckGather -= OnItemCheckGather;       // ItemDetector → ItemDetector2D
         UnbindInputEvent();
-        ResetInput();                       // 채집 등으로 꺼질 때 남은 입력 제거
+        ResetInput();
     }
 
     private void Update()
@@ -102,17 +93,19 @@ public class PlayerController : MonoBehaviour
             StopHorizontal();
             return;
         }
+
         if (!_isGround)
         {
             _isJumpRequested = false;
             return;
         }
+
         Move();
         Turn();
         Jump();
     }
 
-    
+   
 
     private void BindInputEvent()
     {
@@ -126,32 +119,26 @@ public class PlayerController : MonoBehaviour
         _moveAction.canceled -= OnMove;
     }
 
-    private void OpenInventory()
+    private void ResetInput()
     {
-        if (_openInventoryAction.WasPressedThisFrame())
-        {
-            if (_canvas.gameObject.activeSelf)
-            {
-                _canvas.gameObject.SetActive(false);
-            }
-            else
-            {
-                _canvas.gameObject.SetActive(true);
-            }
-        }
+        _moveInput = Vector2.zero;
+        _isJumpRequested = false;
+    }
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        _moveInput = context.ReadValue<Vector2>();
     }
     
-    private void ReadGather()
+
+    private void OpenInventory()
     {
-        if (!_gatherAction.WasPressedThisFrame()) return;
-        if (IsGathering || !_isGround) return;
-        if (_inventory.IsFull)
+        if (!_openInventoryAction.WasPressedThisFrame())
         {
-            FullMessage();
             return;
         }
-        StartGather();      
-        
+
+        _canvas.SetActive(!_canvas.activeSelf);
     }
 
     private void FullMessage()
@@ -166,22 +153,31 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StartCanvas()
     {
-       _inventoryMaxcanvas.gameObject.SetActive(true);
-       float t  = Time.time + 3f;
-       Color color = _image.color;
-       while (Time.time <= t)
-       {
-           yield return null;
-           color.a = Mathf.Clamp01(t - Time.time);
-           _image.color = color;   
-       }
-       _inventoryMaxcanvas.gameObject.SetActive(false);
-       _fullMessageCoroutine = null;
-    }
+        _inventoryMaxcanvas.gameObject.SetActive(true);
+        float t = Time.time + 3f;
+        Color color = _image.color;
+        color.a = 1f;
+        _image.color = color;
 
-    private void OnItemCheckGather(ItemDetector item)  //감지되고 활성화
+        while (Time.time <= t)
+        {
+            yield return null;
+            color.a = Mathf.Clamp01(t - Time.time);
+            _image.color = color;
+        }
+
+        _inventoryMaxcanvas.gameObject.SetActive(false);
+        _fullMessageCoroutine = null;
+    }
+    
+
+    private void OnItemCheckGather(ItemDetector item)        
     {
-        if (IsGathering) return;
+        if (IsGathering)
+        {
+            return;
+        }
+
         if (item.IsCheckGather)
         {
             _itemDetector = item;
@@ -189,15 +185,39 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (_itemDetector != item) return;
+        if (_itemDetector != item)
+        {
+            return;
+        }
 
-        _itemDetector = null;
-        _gatherAction.Disable();
+        ClearGatherTarget();
     }
-    
+
+    private void ReadGather()
+    {
+        if (!_gatherAction.WasPressedThisFrame())
+        {
+            return;
+        }
+
+        if (IsGathering ||
+            !_isGround)
+        {
+            return;
+        }
+
+        if (_inventory.IsFull)
+        {
+            FullMessage();
+            return;
+        }
+
+        StartGather();
+    }
 
     private void StartGather()
     {
+        FaceGatherTarget();
         _gatherTime = _gatherTimer;
         _isJumpRequested = false;
         _animator.SetTrigger(_gatherHash);
@@ -206,60 +226,94 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateGather()
     {
-        if (!IsGathering) return;
+        if (!IsGathering)
+        {
+            return;
+        }
+
         _gatherTime -= Time.deltaTime;
-        if (IsGathering) return;
-        if (_itemDetector == null) return;
-        Debug.Log($"획득한 아이템: {_itemDetector.name}");
-        Destroy(_itemDetector.gameObject);
+
+        if (IsGathering ||
+            _itemDetector == null)
+        {
+            return;
+        }
+
         Item item = _itemDetector.GetComponent<Item>();
-        _inventory.TryAdd(item.Data);
-        _itemDetector = null;             
-        _gatherAction.Disable();   
+        if (item == null)
+        {
+            Debug.LogWarning($"{_itemDetector.name}에 Item 컴포넌트가 없음");
+            ClearGatherTarget();
+            return;
+        }
+
+        if (!_inventory.TryAdd(item.Data))
+        {
+            FullMessage();
+            ClearGatherTarget();
+            return;
+        }
+
+        ReturnGatheredItem();
+        ClearGatherTarget();
     }
-    
-    private void StopHorizontal()
+
+    private void ReturnGatheredItem()
     {
-        Vector3 velocity = _rigidbody.linearVelocity;
-        velocity.x = 0f;
-        _rigidbody.linearVelocity = velocity;
+        Items poolItem = _itemDetector.GetComponent<Items>();
+        if (poolItem == null)
+        {
+            Destroy(_itemDetector.gameObject);
+            return;
+        }
+
+        poolItem.OnReturnToPool();
+    }
+
+    private void ClearGatherTarget()
+    {
+        _itemDetector = null;
+        _gatherAction.Disable();
     }
     
 
-    private void ResetInput()
-    {
-        _moveInput = Vector2.zero;
-        _isJumpRequested = false;
-    }
-
-    private void OnMove(InputAction.CallbackContext context)
-    {
-        _moveInput = context.ReadValue<Vector2>();
-    }
-    
     private void ReadJumpInput()
     {
-        if (IsGathering) return;
-        if (!_jumpAction.WasPressedThisFrame()) return;
-        
+        if (IsGathering)
+        {
+            return;
+        }
+
+        if (!_jumpAction.WasPressedThisFrame())
+        {
+            return;
+        }
+
         _isJumpRequested = true;
     }
 
     private void CheckGround()
     {
-        Vector3 origin = _collider.bounds.center; 
-        float distance = _collider.bounds.extents.y + _checkGroundDistance;   // 중심 → 발 + 여유
+        Vector2 origin = _collider.bounds.center;
+        float distance = _collider.bounds.extents.y + _checkGroundDistance;
 
-        _isGround = Physics.Raycast(origin, Vector3.down, distance, _groundLayer.value);//자기 몸중심으로 하부까지
-        
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, distance, _groundLayer);
+        _isGround = hit.collider != null;                       
     }
 
     private void Move()
     {
-        float maxSpeed = _speedUpAction.IsPressed()? _runSpeed : _moveSpeed;
-        
-        Vector3 velocity = _rigidbody.linearVelocity;
+        float maxSpeed = _speedUpAction.IsPressed() ? _runSpeed : _moveSpeed;
+
+        Vector2 velocity = _rigidbody.linearVelocity;
         velocity.x = _moveInput.x * maxSpeed;
+        _rigidbody.linearVelocity = velocity;
+    }
+
+    private void StopHorizontal()
+    {
+        Vector2 velocity = _rigidbody.linearVelocity;
+        velocity.x = 0f;
         _rigidbody.linearVelocity = velocity;
     }
 
@@ -270,27 +324,54 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float yaw = _moveInput.x > 0f ? 0f: 180f;
-        _rigidbody.rotation = Quaternion.Euler(0f, yaw, 0f);
+        FaceDirection(_moveInput.x);
+    }
+
+    private void FaceDirection(float directionX)
+    {
+        if (_model == null)
+        {
+            return;
+        }
+
+        float yaw = directionX > 0f ? 0f : 180f;
+        _model.localRotation = Quaternion.Euler(0f, yaw, 0f);    // Rigidbody2D 대신 모델을 회전
+    }
+
+    private void FaceGatherTarget()
+    {
+        if (_itemDetector == null)
+        {
+            return;
+        }
+
+        float directionX = _itemDetector.transform.position.x - _rigidbody.position.x;
+
+        if (Mathf.Abs(directionX) < 0.05f)
+        {
+            return;
+        }
+
+        FaceDirection(directionX);
     }
 
     private void Jump()
     {
-        if (!_isJumpRequested)  // 입력이 있을 때만
+        if (!_isJumpRequested)
         {
             return;
         }
 
         _isJumpRequested = false;
 
-        Vector3 velocity = _rigidbody.linearVelocity;
+        Vector2 velocity = _rigidbody.linearVelocity;
         velocity.y = _jumpSpeed;
         _rigidbody.linearVelocity = velocity;
     }
 
     private void Animate()
     {
-        Vector3 velocity = _rigidbody.linearVelocity;
+        Vector2 velocity = _rigidbody.linearVelocity;
 
         float speedX = Mathf.Abs(velocity.x);
         float speedY = velocity.y;
@@ -308,12 +389,12 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat(_speedHash, speedX);
         _animator.SetFloat(_verticalSpeedHash, speedY);
         _animator.SetBool(_isGroundedHash, _isGround);
-        
     }
     private void CacheComponent()
     {
         _animator = GetComponentInChildren<Animator>();
-        _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<CapsuleCollider>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<CapsuleCollider2D>();
+        _rigidbody.freezeRotation = true;                       
     }
 }
