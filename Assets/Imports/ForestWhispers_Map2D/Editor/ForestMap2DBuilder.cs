@@ -594,7 +594,7 @@ namespace ForestWhispers.Map2D.EditorTools
 
             var controller = player.AddComponent<PlayerController2D>();
             controller.Setup(map.killY, new Vector2(map.spawn[0], map.spawn[1]), new Vector2(map.spawnEnd[0], map.spawnEnd[1]), visual.transform);
-            player.AddComponent<PlayerGather>().Setup(controller);
+            //player.AddComponent<PlayerGather>().Setup(controller);
             player.transform.position = new Vector3(map.spawn[0], map.spawn[1], 0f);
             return player;
         }
