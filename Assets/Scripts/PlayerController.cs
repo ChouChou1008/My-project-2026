@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float yaw = directionX > 0f ? 0f : 180f;
+        float yaw = directionX > 0f ? 90f : -90f;
         _model.localRotation = Quaternion.Euler(0f, yaw, 0f);    // Rigidbody2D 대신 모델을 회전
     }
 
