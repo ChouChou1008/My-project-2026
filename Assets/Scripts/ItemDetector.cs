@@ -9,7 +9,7 @@ public class ItemDetector : MonoBehaviour
     public bool IsCheckGather => _isCheckGather;
 
     public static event Action<ItemDetector> OnCheckGather;     // ItemDetector → ItemDetector2D
-
+    
     private void OnDisable()
     {
         _isCheckGather = false;

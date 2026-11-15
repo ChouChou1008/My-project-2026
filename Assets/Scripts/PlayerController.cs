@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Inventory _inventory;
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private Canvas _inventoryMaxcanvas;
+    [SerializeField] private GameObject _inventoryMaxcanvas;
+    //[SerializeField] private Canvas _inventoryMaxcanvas;
     [SerializeField] private Image _image;
 
     private const float VelocityDeadZone = 0.05f;

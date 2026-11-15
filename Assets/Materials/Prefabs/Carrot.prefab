@@ -134,6 +134,7 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 8
+  _inRange: {fileID: 0}
 --- !u!70 &142732168632943128
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
