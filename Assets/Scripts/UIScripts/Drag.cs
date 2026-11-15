@@ -3,13 +3,13 @@ using UnityEngine.EventSystems;
 
 public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private Transform _dragLayer;          
-
-    private RectTransform _rectTransform;
+    private Transform _inventory;          // InventoryPanel
+    private Transform _itemListTr;         // Bag
     private CanvasGroup _canvasGroup;
-    private Transform _originalParent;                    
+    private GameObject _placeholder;  
 
-    public bool IsDropped { get; set; }                    
+    private int _originalIndex;
+    private bool _isDropped;               // Drop이 받아 줬는지
 
     private void Awake()
     {
@@ -18,42 +18,77 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void CacheComponent()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        _inventory = GameObject.Find("InventoryPanel").transform;
+        _itemListTr = GameObject.Find("Bag").transform;
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _originalParent = transform.parent;
-        IsDropped = false;
+        _originalIndex = transform.GetSiblingIndex();  // Drag한 순서 기억
+        _isDropped = false;
 
-        transform.SetParent(_dragLayer);
+        transform.SetParent(_inventory);
         transform.SetAsLastSibling();
         _canvasGroup.blocksRaycasts = false;
+        CreatePlaceholder();  
     }
+
+    private void CreatePlaceholder()
+    {
+        _placeholder = new GameObject("Placeholder", typeof(RectTransform));
+        _placeholder.transform.SetParent(_itemListTr, false);
+        _placeholder.transform.SetSiblingIndex(_originalIndex); 
+    }
+    
 
     public void OnDrag(PointerEventData eventData)
     {
-        _rectTransform.position = eventData.position;        
+        transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         _canvasGroup.blocksRaycasts = true;
 
-        if (IsDropped)
+        if (_isDropped)                      // Drop이 이미 처리함
         {
-            return;                                          
+            return;
         }
 
-        MoveTo(_originalParent);                             
+        ReturnToBag();                       // 칸 밖에 놓음 → 원래 자리
     }
 
-    public void MoveTo(Transform slot)
+    public void SwapWith(Transform target)   // Drop이 불러 줌
     {
-        transform.SetParent(slot);
-        _rectTransform.anchoredPosition = Vector2.zero;      
+        ReturnToBag();                       // 먼저 원래 자리로 넣어 순서를 맞추고
+
+        int myIndex = transform.GetSiblingIndex();
+        int targetIndex = target.GetSiblingIndex();
+
+        if (myIndex < targetIndex)
+        {
+            target.SetSiblingIndex(myIndex);
+            transform.SetSiblingIndex(targetIndex);
+        }
+        else
+        {
+            transform.SetSiblingIndex(targetIndex);
+            target.SetSiblingIndex(myIndex);
+        }
+
+        _isDropped = true;
     }
 
-    public Transform OriginalParent => _originalParent;
+    private void ReturnToBag()
+    {
+        if (_placeholder != null)
+        {
+            _placeholder.transform.SetParent(null);   // Bag에서 먼저 빼고 (순서 계산에서 제외)
+            Destroy(_placeholder);
+            _placeholder = null;
+        }
+        transform.SetParent(_itemListTr);
+        transform.SetSiblingIndex(_originalIndex);
+    }
 }
