@@ -11,10 +11,9 @@ public class Inventory : MonoBehaviour
     private Dictionary<ItemData,int> _items;
     private  List<ItemData> _order = new List<ItemData>();
     private int  _totalCount = 0;
-    public bool IsFull => _totalCount >= MaxSize; 
+    private bool _isSell;
+    public bool IsFull => _totalCount >= MaxSize;
     
-
-   
 
     private void Awake()
     {
@@ -78,4 +77,34 @@ public class Inventory : MonoBehaviour
             Debug.Log($"{pair.Key.ItemName} x{pair.Value}");   
         }
     }
+
+    public int GetCount(ItemData item)
+    {
+        if (_items.TryGetValue(item, out int count))
+        {
+            return count;
+        }
+
+        return 0;
+    }
+
+    public bool TryRemove(ItemData item, int count)
+    {
+        if (GetCount(item) < count)
+        {
+            return false;
+        }
+        _items[item] -=  count;
+        _totalCount -=  count;
+
+        if (_items[item] <= 0)
+        {
+            _items.Remove(item);
+            _order.Remove(item);
+        }
+        RefreshSlots();
+        return true;
+    }
+    
+    
 }
