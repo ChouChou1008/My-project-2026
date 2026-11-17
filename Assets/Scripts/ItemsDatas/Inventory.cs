@@ -106,6 +106,28 @@ public class Inventory : MonoBehaviour
         RefreshSlots();
         return true;
     }
-    
+    public void SwapOrder(int from, int to)
+    {
+        if (from == to ||
+            from < 0 ||
+            to < 0 ||
+            from >= _order.Count)                 // 빈 칸을 끌어왔으면 무시
+        {
+            return;
+        }
+
+        if (to >= _order.Count)                   // 빈 칸에 놓음 → 맨 뒤로
+        {
+            ItemData item = _order[from];
+            _order.RemoveAt(from);
+            _order.Add(item);
+        }
+        else                                      // 아이템끼리 → 자리 교환
+        {
+            (_order[from], _order[to]) = (_order[to], _order[from]);
+        }
+
+        RefreshSlots();                           // 가방 창 + 상점 가방 다시 그리기
+    }
     
 }

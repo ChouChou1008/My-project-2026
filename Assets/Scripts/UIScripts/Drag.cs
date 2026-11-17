@@ -6,7 +6,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private Transform _inventory;          // InventoryPanel
     private Transform _itemListTr;         // Bag
     private CanvasGroup _canvasGroup;
-    private GameObject _placeholder;  
+    private GameObject _placeholder;
+    private Inventory _inventoryData;
 
     private int _originalIndex;
     private bool _isDropped;               // Drop이 받아 줬는지
@@ -21,6 +22,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _inventory = GameObject.Find("InventoryPanel").transform;
         _itemListTr = GameObject.Find("Bag").transform;
         _canvasGroup = GetComponent<CanvasGroup>();
+        _inventoryData = _inventory.GetComponent<Inventory>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -76,7 +78,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.SetSiblingIndex(targetIndex);
             target.SetSiblingIndex(myIndex);
         }
-
+        _inventoryData.SwapOrder(_originalIndex, targetIndex);  
         _isDropped = true;
     }
 
