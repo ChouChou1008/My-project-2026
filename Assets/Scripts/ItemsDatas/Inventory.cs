@@ -7,19 +7,13 @@ public class Inventory : MonoBehaviour
     [field: SerializeField]  public int MaxSize { get; private set; } = 20;
     [SerializeField] private Slot[] _slots;
     [SerializeField] private Slot[] _storeSlots;
-    
-    private Dictionary<ItemData,int> _items;
+
+    private readonly Dictionary<ItemData, int> _items = new Dictionary<ItemData, int>();
     private  List<ItemData> _order = new List<ItemData>();
     private int  _totalCount = 0;
-    private bool _isSell;
+    
     public bool IsFull => _totalCount >= MaxSize;
     
-
-    private void Awake()
-    {
-        _items = new Dictionary<ItemData,int>(MaxSize);
-    }
-
     private void Start()
     {
         RefreshSlots();
@@ -55,7 +49,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    private void RefreshSlots()
+    public void RefreshSlots()
     {
         DrawSlots(_slots);
         DrawSlots(_storeSlots);
@@ -63,10 +57,6 @@ public class Inventory : MonoBehaviour
 
     private void DrawSlots(Slot[] _slot)
     {
-        if (_slot == null)          // Inspector에서 비워 둔 경우
-        {
-            return;
-        }
         for (int i = 0; i < _slot.Length; i++)
         {
             if (i >= _order.Count)                            // 아이템이 없는 칸
@@ -112,6 +102,7 @@ public class Inventory : MonoBehaviour
             _items.Remove(item);
             _order.Remove(item);
         }
+        Debug.Log("Inventory 정리");
         RefreshSlots();
         return true;
     }
