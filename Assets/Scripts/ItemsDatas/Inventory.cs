@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     [field: SerializeField]  public int MaxSize { get;private set; } = 20;
     [SerializeField] private Slot[] _slots;
-    
+    [SerializeField] private Slot[] _storeSlots;
     
     private Dictionary<ItemData,int> _items;
     private  List<ItemData> _order = new List<ItemData>();
@@ -57,6 +57,16 @@ public class Inventory : MonoBehaviour
 
     private void RefreshSlots()
     {
+        DrawSlots(_slots);
+        DrawSlots(_storeSlots);
+    }
+
+    private void DrawSlots(Slot[] slot)
+    {
+        if (slot == null)          // Inspector에서 비워 둔 경우
+        {
+            return;
+        }
         for (int i = 0; i < _slots.Length; i++)
         {
             if (i >= _order.Count)                            // 아이템이 없는 칸
