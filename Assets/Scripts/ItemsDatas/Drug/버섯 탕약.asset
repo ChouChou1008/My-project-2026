@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680aa970049bfab428aa281ff096eba7, type: 3}
   m_Name: "\uBC84\uC12F \uD0D5\uC57D"
   m_EditorClassIdentifier: Assembly-CSharp::ResultItemData
-  _resultItemName: {fileID: 0}
-  _description: 
-  _sellPrice: 0
+  _resultItem: {fileID: 11400000, guid: 2e6b8dc11e819ae4cb01f54910d0a012, type: 2}
+  _description: "\uBC84\uC12F \uD0D5\uC57D"
+  _sellPrice: 60
   _sellable: 0
-  _ingredients: []
+  _ingredients:
+  - _item: {fileID: 11400000, guid: 08582149360014442a0ddb0c0fb35d9d, type: 2}
+    _count: 4

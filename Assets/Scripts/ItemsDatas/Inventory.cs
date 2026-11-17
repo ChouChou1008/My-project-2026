@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [field: SerializeField]  public int MaxSize { get;private set; } = 20;
+    [field: SerializeField]  public int MaxSize { get; private set; } = 20;
     [SerializeField] private Slot[] _slots;
     [SerializeField] private Slot[] _storeSlots;
     
@@ -61,22 +61,22 @@ public class Inventory : MonoBehaviour
         DrawSlots(_storeSlots);
     }
 
-    private void DrawSlots(Slot[] slot)
+    private void DrawSlots(Slot[] _slot)
     {
-        if (slot == null)          // Inspector에서 비워 둔 경우
+        if (_slot == null)          // Inspector에서 비워 둔 경우
         {
             return;
         }
-        for (int i = 0; i < _slots.Length; i++)
+        for (int i = 0; i < _slot.Length; i++)
         {
             if (i >= _order.Count)                            // 아이템이 없는 칸
             {
-                _slots[i].Clear();
+                _slot[i].Clear();
                 continue;
             }
 
             ItemData item = _order[i];                        // i번째로 주운 아이템
-            _slots[i].SetItem(item, _items[item]);            // 개수는 Dictionary에서
+            _slot[i].SetItem(item, _items[item]);            // 개수는 Dictionary에서
         }
     }
 
