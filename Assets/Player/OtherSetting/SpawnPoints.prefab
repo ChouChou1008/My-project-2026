@@ -87,8 +87,6 @@ MonoBehaviour:
   _itemsPrefab:
   - {fileID: -1217634657087329146, guid: 2c7a709b2454b4644aa1ac6d8be1e779, type: 3}
   - {fileID: 4072827587705622836, guid: a7236545cb16abc4b9368801c380f3ac, type: 3}
-  - {fileID: -1899716107101360773, guid: c176479ee4806144c89328e59fb6a2c7, type: 3}
-  - {fileID: 3516515008548278093, guid: 1492c72e6d350d74daf81205bf4dce46, type: 3}
   _spawnInterval: 2
   _startCount: 2
 --- !u!1 &2939725142772423106

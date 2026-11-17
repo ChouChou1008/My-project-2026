@@ -48,8 +48,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a28b79cfb0b3724fadcd9a46df7b85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
-  <MaxSize>k__BackingField: 5
+  <MaxSize>k__BackingField: 10
   _slots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _storeSlots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

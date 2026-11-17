@@ -135,17 +135,6 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 3298761008906420276, guid: ddc5e5563ff150b429e8b18e6a20cf9c, type: 3}
   m_PrefabInstance: {fileID: 7391488742225070173}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &181761633 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3672797276328766001, guid: 52fe8554476a6d747bbaf43602ae1b20, type: 3}
-  m_PrefabInstance: {fileID: 3421287513442058980}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f503252535fc74458a4814f3449d54f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Slot
 --- !u!1 &189459476
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,17 +465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a28b79cfb0b3724fadcd9a46df7b85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
---- !u!114 &632317855 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2964946624295259425, guid: 52fe8554476a6d747bbaf43602ae1b20, type: 3}
-  m_PrefabInstance: {fileID: 3421287513442058980}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f503252535fc74458a4814f3449d54f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Slot
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1300,7 @@ PrefabInstance:
     - target: {fileID: 5856658467222828766, guid: f89dc76edb27c974285e85fd5cd95597, type: 3}
       propertyPath: '_slots.Array.data[0]'
       value: 
-      objectReference: {fileID: 181761633}
+      objectReference: {fileID: 0}
     - target: {fileID: 5856658467222828766, guid: f89dc76edb27c974285e85fd5cd95597, type: 3}
       propertyPath: '_slots.Array.data[1]'
       value: 
@@ -1330,7 +1308,7 @@ PrefabInstance:
     - target: {fileID: 5856658467222828766, guid: f89dc76edb27c974285e85fd5cd95597, type: 3}
       propertyPath: '_slots.Array.data[2]'
       value: 
-      objectReference: {fileID: 632317855}
+      objectReference: {fileID: 0}
     - target: {fileID: 6200254526820434635, guid: f89dc76edb27c974285e85fd5cd95597, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

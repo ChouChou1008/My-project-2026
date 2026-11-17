@@ -2091,6 +2091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rune_Gate
       objectReference: {fileID: 0}
+    - target: {fileID: 2975341332680510430, guid: 09a4b64814b8bfa4dbd35195cc8edf2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
