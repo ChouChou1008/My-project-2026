@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Inventory _inventory;
     [SerializeField] private GameObject _canvas;
     [SerializeField] private GameObject _inventoryMaxcanvas;
+
+    [SerializeField] private GameObject _trail;
     //[SerializeField] private Canvas _inventoryMaxcanvas;
     [SerializeField] private Image _image;
 
@@ -304,8 +306,19 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float maxSpeed = _speedUpAction.IsPressed() ? _runSpeed : _moveSpeed;
+        float maxSpeed;
+        if (_speedUpAction.IsInProgress())
+        {
+            maxSpeed = _runSpeed;
+            _trail.gameObject.SetActive(true);
+        }
+        else
+        {
+            maxSpeed = _moveSpeed;
+            _trail.gameObject.SetActive(false);
+        }
 
+        
         Vector2 velocity = _rigidbody.linearVelocity;
         velocity.x = _moveInput.x * maxSpeed;
         _rigidbody.linearVelocity = velocity;

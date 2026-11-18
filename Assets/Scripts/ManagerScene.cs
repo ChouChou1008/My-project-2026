@@ -12,4 +12,6 @@ public class ManagerScene : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
+    
+    
 }
