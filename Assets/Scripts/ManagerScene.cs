@@ -7,4 +7,9 @@ public class ManagerScene : MonoBehaviour
     {
         SceneManager.LoadScene("Scenes/TestSence");
     }
+    public void Exit()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
 }
