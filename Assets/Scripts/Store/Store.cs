@@ -102,7 +102,7 @@ public class Store : MonoBehaviour
         Color color = _craftButton.image.color;
         color.a = 0;
         _craftButton.image.color = color;
-        color.a = 255;
+        color.a = 1;
         _sellButton.image.color = color;
         _craftGameObject.SetActive(false);
         _sellGameObject.SetActive(true);
@@ -113,7 +113,7 @@ public class Store : MonoBehaviour
         Color color = _sellButton.image.color;
         color.a = 0;
         _sellButton.image.color = color;
-        color.a = 255;
+        color.a = 1;
         _craftButton.image.color = color;
         _sellGameObject.SetActive(false);
         _craftGameObject.SetActive(true);

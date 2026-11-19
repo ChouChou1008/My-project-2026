@@ -30,21 +30,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _inventoryMaxcanvas;
 
     [SerializeField] private GameObject _trail;
-    //[SerializeField] private Canvas _inventoryMaxcanvas;
     [SerializeField] private Image _image;
 
+    [SerializeField] private LayerMask _pushableLayer;
+    [SerializeField] private float _pushCheckDistance = 0.08f;
+    [SerializeField] private float _pushSpeed = 1f;           // 걷기(2.0)보다 느리게
+    [SerializeField] private float _pushAccel = 3f;             // 클수록 가벼운 박스
+    [SerializeField] private float _pushLeanInTime = 0.15f;     // 힘 주는 시간
+    [SerializeField] private float _pushAnimNativeSpeed = 1.2f; // 밀기 클립의 원래 이동 속도
+    [SerializeField] private float _pushAlignStrength = 10f;
+    
+    
+    
     private const float VelocityDeadZone = 0.05f;
 
     private readonly int _speedHash = Animator.StringToHash("Speed");
     private readonly int _verticalSpeedHash = Animator.StringToHash("VerticalSpeed");
     private readonly int _isGroundedHash = Animator.StringToHash("IsGrounded");
     private readonly int _gatherHash = Animator.StringToHash("Gather");
+    private readonly int _isPushingHash = Animator.StringToHash("IsPushing");
+    private readonly int _pushSpeedHash = Animator.StringToHash("PushSpeed");
+    private readonly int _pushAnimSpeedHash = Animator.StringToHash("PushAnimSpeed");
 
+    private PushableBox2D _pushTarget;
+    private float _facingX = 1f;
+    private float _pushTimer;
+    private float _pushCurSpeed;
+    private bool IsPushing => _pushTarget != null;
+    
     private Animator _animator;
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
     private Vector2 _moveInput;
-    private ItemDetector _itemDetector;                        // ItemDetector → ItemDetector2D
+    private ItemDetector _itemDetector;                    
     private Coroutine _fullMessageCoroutine;
 
     private float _gatherTime = -1f;
@@ -63,7 +81,7 @@ public class PlayerController : MonoBehaviour
         _speedUpAction.Enable();
         _jumpAction.Enable();
         _openInventoryAction.Enable();
-        ItemDetector.OnCheckGather += OnItemCheckGather;       // ItemDetector → ItemDetector2D
+        ItemDetector.OnCheckGather += OnItemCheckGather;       
         BindInputEvent();
     }
 
@@ -74,9 +92,11 @@ public class PlayerController : MonoBehaviour
         _jumpAction.Disable();
         _openInventoryAction.Disable();
         _gatherAction.Disable();
-        ItemDetector.OnCheckGather -= OnItemCheckGather;       // ItemDetector → ItemDetector2D
+        ItemDetector.OnCheckGather -= OnItemCheckGather;     
         UnbindInputEvent();
         ResetInput();
+        
+        if(IsPushing) EndPush();
     }
 
     private void Update()
@@ -93,13 +113,20 @@ public class PlayerController : MonoBehaviour
     {
         if (IsGathering)
         {
+            if(IsPushing) EndPush();
             StopHorizontal();
             return;
         }
 
         if (!_isGround)
         {
+            if(IsPushing) EndPush();
             _isJumpRequested = false;
+            return;
+        }
+
+        if (UpdatePush())
+        {
             return;
         }
 
@@ -204,7 +231,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (IsGathering ||
-            !_isGround)
+            IsPushing ||
+            !_isGround
+            )
         {
             return;
         }
@@ -343,6 +372,7 @@ public class PlayerController : MonoBehaviour
 
     private void FaceDirection(float directionX)
     {
+        _facingX = Mathf.Sign(directionX);
         if (_model == null)
         {
             return;
@@ -371,6 +401,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        
         if (!_isJumpRequested)
         {
             return;
@@ -383,6 +414,99 @@ public class PlayerController : MonoBehaviour
         _rigidbody.linearVelocity = velocity;
     }
 
+        private bool UpdatePush()
+    {
+        bool pressingForward = Mathf.Abs(_moveInput.x) > 0.1f &&
+                               Mathf.Sign(_moveInput.x) == _facingX;
+
+        if (!IsPushing)
+        {
+            if (!pressingForward) return false;
+
+            PushableBox2D box = FindPushable();
+            if (box == null) return false;
+
+            BeginPush(box);
+        }
+        else if (!pressingForward || FindPushable() != _pushTarget)
+        {
+            EndPush();          // 입력을 뗐거나, 방향을 바꿨거나, 박스가 떨어짐
+            return false;
+        }
+
+        _isJumpRequested = false;
+        float dt = Time.fixedDeltaTime;
+        _pushTimer += dt;
+        
+        if (_pushTimer < _pushLeanInTime)
+        {
+            ApplyPushVelocity(0f);
+            return true;
+        }
+
+        // 2) 천천히 가속, 막혀 있으면 버티기
+        _pushCurSpeed = Mathf.MoveTowards(_pushCurSpeed, _pushSpeed, _pushAccel * dt);
+
+        if (!_pushTarget.CanMove(_facingX, _pushCurSpeed * dt))
+        {
+            _pushCurSpeed = 0f;
+        }
+
+        ApplyPushVelocity(_pushCurSpeed * _facingX);
+        return true;
+    }
+
+    private PushableBox2D FindPushable()
+    {
+        Bounds bounds = _collider.bounds;
+
+        // 발 위 0.05부터 콜라이더 중심까지의 높이를 검사
+        float bottom = bounds.min.y + 0.05f;
+        float top = bounds.center.y;
+        Vector2 origin = new Vector2(bounds.center.x, (bottom + top) * 0.5f);
+        Vector2 size = new Vector2(0.05f, top - bottom);
+
+        float distance = bounds.extents.x + _pushCheckDistance;
+
+        RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, new Vector2(_facingX, 0f),
+            distance, _pushableLayer);
+        return hit.collider != null ? hit.collider.GetComponent<PushableBox2D>() : null;
+    }
+
+    private void BeginPush(PushableBox2D box)
+    {
+        _pushTarget = box;
+        _pushTimer = 0f;
+        _pushCurSpeed = 0f;
+        _trail.gameObject.SetActive(false);
+        box.BeginPush();
+    }
+
+    private void EndPush()
+    {
+        if (_pushTarget != null)
+        {
+            _pushTarget.EndPush();
+        }
+
+        _pushTarget = null;
+        _pushCurSpeed = 0f;
+    }
+
+    private void ApplyPushVelocity(float velocityX)
+    {
+        // 박스 면에 딱 붙도록 조금씩 보정 (손이 박스에서 뜨거나 파고들지 않게)
+        Bounds box = _pushTarget.Collider.bounds;
+        float boxEdge = _facingX > 0f ? box.min.x : box.max.x;
+        float targetX = boxEdge - _facingX * (_collider.bounds.extents.x + 0.01f);
+        float correction = (targetX - _collider.bounds.center.x) * _pushAlignStrength;
+
+        Vector2 velocity = _rigidbody.linearVelocity;
+        velocity.x = velocityX + correction;
+        _rigidbody.linearVelocity = velocity;
+
+        _pushTarget.SetVelocityX(velocityX);
+    }
     private void Animate()
     {
         Vector2 velocity = _rigidbody.linearVelocity;
@@ -403,6 +527,22 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat(_speedHash, speedX);
         _animator.SetFloat(_verticalSpeedHash, speedY);
         _animator.SetBool(_isGroundedHash, _isGround);
+        _animator.SetBool(_isPushingHash,IsPushing);
+        
+        if (IsPushing)
+        {
+            float normalized = _pushCurSpeed / _pushSpeed;
+            _animator.SetFloat(_pushSpeedHash, normalized, 0.1f, Time.deltaTime);
+
+            // 발이 바닥에서 미끄러져 보이지 않도록 재생 속도를 실제 이동 속도에 맞춤
+            float animSpeed = _pushCurSpeed > 0.01f ? _pushCurSpeed / _pushAnimNativeSpeed : 1f;
+            _animator.SetFloat(_pushAnimSpeedHash, animSpeed);
+        }
+        else
+        {
+            _animator.SetFloat(_pushAnimSpeedHash, 1f);
+            _animator.SetFloat(_pushSpeedHash, 0f);
+        }
     }
     private void CacheComponent()
     {

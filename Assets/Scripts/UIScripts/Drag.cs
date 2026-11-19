@@ -22,7 +22,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _inventory = GameObject.Find("InventoryPanel").transform;
         _itemListTr = GameObject.Find("Bag").transform;
         _canvasGroup = GetComponent<CanvasGroup>();
-        _inventoryData = _inventory.GetComponent<Inventory>();
+        _inventoryData = FindFirstObjectByType<Inventory>(FindObjectsInactive.Include);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -61,24 +61,19 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         ReturnToBag();                       // 칸 밖에 놓음 → 원래 자리
     }
 
-    public void SwapWith(Transform target)   // Drop이 불러 줌
+    public void SwapWith(Transform target)        // Drop이 불러 줌
     {
-        ReturnToBag();                       // 먼저 원래 자리로 넣어 순서를 맞추고
+        ReturnToBag();                            // Slot은 무조건 원래 자리로
 
-        int myIndex = transform.GetSiblingIndex();
+        if (_inventoryData == null)
+        {
+            Debug.LogError("[Drag] 씬에서 Inventory를 찾지 못했어요", this);
+            return;
+        }
+
         int targetIndex = target.GetSiblingIndex();
+        _inventoryData.SwapOrder(_originalIndex, targetIndex);   // 데이터만 교환 → RefreshSlots로 다시 그리기
 
-        if (myIndex < targetIndex)
-        {
-            target.SetSiblingIndex(myIndex);
-            transform.SetSiblingIndex(targetIndex);
-        }
-        else
-        {
-            transform.SetSiblingIndex(targetIndex);
-            target.SetSiblingIndex(myIndex);
-        }
-        _inventoryData.SwapOrder(_originalIndex, targetIndex);  
         _isDropped = true;
     }
 

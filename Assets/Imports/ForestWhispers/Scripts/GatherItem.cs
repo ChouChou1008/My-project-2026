@@ -77,6 +77,7 @@ namespace ForestWhispers.Game
         private void OnDisable()
         {
             ActiveItems.Remove(this);
+            
         }
 
         private void LateUpdate()
