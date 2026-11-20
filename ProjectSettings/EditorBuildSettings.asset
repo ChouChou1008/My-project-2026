@@ -12,8 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/StartSence.unity
     guid: 21013ed33c9bbad4eb4a5c7381d12761
   - enabled: 1
-    path: Assets/Scenes/MapDesin.unity
+    path: Assets/Scenes/MainSence.unity
     guid: f3a8995264610134db5eecfb518db79c
+  - enabled: 1
+    path: Assets/Scenes/FristotherSence.unity
+    guid: 1ba41ca0518056a4cba56196b261ef1d
   - enabled: 1
     path: Assets/Scenes/otherSence.unity
     guid: 5b3044471f7213845b7730563a0fce85

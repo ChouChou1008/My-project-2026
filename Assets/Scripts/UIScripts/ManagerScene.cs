@@ -5,12 +5,12 @@ public class ManagerScene : MonoBehaviour
 {
     public void ChangeScence()
     {
-        SceneManager.LoadScene("Scenes/MapDesin");
+        SceneManager.LoadScene("Scenes/MainSence");
     }
 
     public void ChangeTestScence()
     {
-        SceneManager.LoadScene("Scenes/otherTest");
+        SceneManager.LoadScene(Random.Range(2,3));
     }
 
     public void ResetScence()

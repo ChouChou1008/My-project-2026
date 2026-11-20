@@ -8,11 +8,16 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Slot[] _slots;
     [SerializeField] private Slot[] _storeSlots;
 
-    private readonly Dictionary<ItemData, int> _items = new Dictionary<ItemData, int>();
-    private  List<ItemData> _order = new List<ItemData>();
-    private int  _totalCount = 0;
-    
+    private InventoryData Data => GameManager.Instance.Inventory;
+    private Dictionary<ItemData, int> _items => Data.Items;
+    private List<ItemData> _order => Data.Order;
+    private int _totalCount
+    {
+        get => Data.TotalCount;
+        set => Data.TotalCount = value;
+    }
     public bool IsFull => _totalCount >= MaxSize;
+    
     
     private void Start()
     {

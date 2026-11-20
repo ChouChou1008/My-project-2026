@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uD68C\uBCF5\uC57D"
   m_EditorClassIdentifier: Assembly-CSharp::ResultItemData
   _resultItem: {fileID: 11400000, guid: 6e75ba5fb7bef6c448062dc305cdb41e, type: 2}
-  _description: "\uAC00\uACF5\uB41C \uC57D"
+  _description: "\uC54C \uC218 \uC5C6\uB294 \uD0A4"
   _sellPrice: 45
   _sellable: 0
   _ingredients:
