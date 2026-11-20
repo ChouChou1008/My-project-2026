@@ -4,7 +4,7 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private MonsterState _monsterState;
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if ((_playerLayer.value & (1 << other.gameObject.layer)) == 0)

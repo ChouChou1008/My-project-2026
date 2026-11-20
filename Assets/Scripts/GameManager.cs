@@ -30,8 +30,10 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+
     private void CacheComponent()
     {
         coin = GetComponent<Coin>();
     }
+    
 }
