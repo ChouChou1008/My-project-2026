@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class ManagerScene : MonoBehaviour
 {
+    [SerializeField] private GameObject _settingObject;
     public void ChangeScence()
     {
         SceneManager.LoadScene("Scenes/MainSence");
@@ -16,6 +17,16 @@ public class ManagerScene : MonoBehaviour
     public void ResetScence()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void SettingButton()
+    {
+        _settingObject.SetActive(true);
+    }
+
+    public void OnButtonClick()
+    {
+        _settingObject.SetActive(false);
     }
     
     
