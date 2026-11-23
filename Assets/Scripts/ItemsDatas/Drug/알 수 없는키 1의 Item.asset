@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54d2064cde528d04da31482ecd911d4e, type: 3}
-  m_Name: "\uBC84\uC11D \uD0D5\uC57DitemData"
+  m_Name: "\uC54C \uC218 \uC5C6\uB294\uD0A4 1\uC758 Item"
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  _itemName: "\uBC84\uC12F \uD0D5\uC57D"
-  _itemSprite: {fileID: 21300000, guid: b70aa73bf4497a642a6a4c54dc2454af, type: 3}
+  _itemName: "\uD68C\uBCF5\uC57D"
+  _itemSprite: {fileID: 21300000, guid: 86899d48ffcde714b8b2ca2f9bc7008c, type: 3}
   _itemGrade: 3
-  _itemPrice: 60
+  _itemPrice: 45
