@@ -1021,6 +1021,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _monsterState: {fileID: 597499385}
+  _boosIntro: {fileID: 0}
+  _controller: {fileID: 0}
 --- !u!61 &101283005
 BoxCollider2D:
   m_ObjectHideFlags: 0
