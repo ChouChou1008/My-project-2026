@@ -216,6 +216,8 @@ MonoBehaviour:
     m_Bits: 8
   _playerCamera: {fileID: 660512423}
   _globalVolume: {fileID: 698274129}
+  _requiredKey: {fileID: 11400000, guid: ab3b7d5a7fb877344a60406574c490fe, type: 2}
+  _lockMessage: {fileID: 0}
 --- !u!1 &30440230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1185,8 @@ MonoBehaviour:
     m_Bits: 8
   _playerCamera: {fileID: 660512423}
   _globalVolume: {fileID: 698274129}
+  _requiredKey: {fileID: 11400000, guid: 6e75ba5fb7bef6c448062dc305cdb41e, type: 2}
+  _lockMessage: {fileID: 0}
 --- !u!1 &428917696
 GameObject:
   m_ObjectHideFlags: 0
@@ -7001,6 +7005,8 @@ MonoBehaviour:
     m_Bits: 8
   _playerCamera: {fileID: 660512423}
   _globalVolume: {fileID: 698274129}
+  _requiredKey: {fileID: 11400000, guid: 2e6b8dc11e819ae4cb01f54910d0a012, type: 2}
+  _lockMessage: {fileID: 0}
 --- !u!1001 &3028402824628909061
 PrefabInstance:
   m_ObjectHideFlags: 0

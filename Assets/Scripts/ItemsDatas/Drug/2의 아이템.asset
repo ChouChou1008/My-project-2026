@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d2064cde528d04da31482ecd911d4e, type: 3}
   m_Name: "2\uC758 \uC544\uC774\uD15C"
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  _itemName: "\uBC84\uC12F \uD0D5\uC57D"
+  _itemName: 알 수 없는 키 2
   _itemSprite: {fileID: 21300000, guid: b70aa73bf4497a642a6a4c54dc2454af, type: 3}
   _itemGrade: 3
   _itemPrice: 60
