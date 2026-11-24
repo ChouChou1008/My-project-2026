@@ -1380,11 +1380,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6103666733184396054, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: _offset.y
-      value: 2
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 6103666733184396054, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: _offset.z
-      value: -18
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 6103666733184396054, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_Enabled
@@ -5073,7 +5073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DayNightController
   _volume: {fileID: 698274130}
   _managerScene: {fileID: 716665186}
-  duration: 60
+  duration: 45
   _sun: {fileID: 428917696}
   _moon: {fileID: 630890561}
   _clock: {fileID: 1460437139}
@@ -6109,11 +6109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6604446773263753389, guid: b0b1a7b8516157a499fafb140a72d7ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -175.8
+      value: -377.35
       objectReference: {fileID: 0}
     - target: {fileID: 6604446773263753389, guid: b0b1a7b8516157a499fafb140a72d7ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.6
+      value: 57.9
       objectReference: {fileID: 0}
     - target: {fileID: 6604446773263753389, guid: b0b1a7b8516157a499fafb140a72d7ba, type: 3}
       propertyPath: m_LocalPosition.z
