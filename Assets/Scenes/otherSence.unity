@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &76227544
 Transform:
   m_ObjectHideFlags: 0
@@ -359,6 +359,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 322302697966502929, guid: b0b1a7b8516157a499fafb140a72d7ba, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: d8387f2c5e8457e49a1fadd2ffcc12e7, type: 2}
     - target: {fileID: 907442117645244378, guid: b0b1a7b8516157a499fafb140a72d7ba, type: 3}
       propertyPath: m_Type
       value: 2
@@ -447,6 +451,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8690513499024177485, guid: b0b1a7b8516157a499fafb140a72d7ba, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: d8387f2c5e8457e49a1fadd2ffcc12e7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1340,6 +1348,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a756aace92655d1428b8e83da831c00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ManagerScene
+  _settingObject: {fileID: 0}
+  _controlsImage: {fileID: 0}
+  _audioImage: {fileID: 0}
+  _volumeSlider: {fileID: 0}
 --- !u!114 &1045105362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2818,7 +2830,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d8387f2c5e8457e49a1fadd2ffcc12e7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

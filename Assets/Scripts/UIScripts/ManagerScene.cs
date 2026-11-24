@@ -8,7 +8,8 @@ public class ManagerScene : MonoBehaviour
     [SerializeField] private GameObject _controlsImage;
     [SerializeField] private GameObject _audioImage;
     [SerializeField] private Slider _volumeSlider;
-
+    
+    
     public float ChangeVolume(float volume)
     {
         return _volumeSlider.value = volume;
@@ -31,7 +32,7 @@ public class ManagerScene : MonoBehaviour
 
     public void ChangeTestScence()
     {
-        SceneManager.LoadScene(Random.Range(2,3));
+        SceneManager.LoadScene(Random.Range(2,3)); 
     }
 
     public void ResetScence()
