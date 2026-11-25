@@ -1663,10 +1663,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1394046573}
     m_Modifications:
+    - target: {fileID: 1029194755137766010, guid: 2de0338413c43d346838b909d9b30686, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_ColorSpace
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2733657674610083236, guid: 2de0338413c43d346838b909d9b30686, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2733657674610083236, guid: 2de0338413c43d346838b909d9b30686, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 36745d8ee98271b4c9bc7f560bde0882, type: 2}
     - target: {fileID: 5513046169351114229, guid: 2de0338413c43d346838b909d9b30686, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3342,10 +3350,28 @@ MonoBehaviour:
       Time: 1
       CustomCurve:
         serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.04597473
+          value: 1.1306305
+          inSlope: -0.13692561
+          outSlope: -0.13692561
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: -0.13692561
+          outSlope: -0.13692561
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     Hold: 1
   - Camera: {fileID: 1852213354}
     Blend:
@@ -6347,7 +6373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 40
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001

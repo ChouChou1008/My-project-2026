@@ -32,7 +32,7 @@ public class ManagerScene : MonoBehaviour
 
     public void ChangeTestScence()
     {
-        SceneManager.LoadScene(Random.Range(2,3)); 
+        SceneManager.LoadScene(Random.Range(2,4)); 
     }
 
     public void ResetScence()

@@ -451,7 +451,7 @@ public class PlayerController : MonoBehaviour
         {
             _pushCurSpeed = 0f;
         }
-
+    
         ApplyPushVelocity(_pushCurSpeed * _facingX);
         return true;
     }
