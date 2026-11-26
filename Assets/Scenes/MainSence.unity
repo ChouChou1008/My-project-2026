@@ -794,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2747815885108190112, guid: f4dc34a7cbfebaa40aa8f8c004333ef1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4728166154385924403, guid: f4dc34a7cbfebaa40aa8f8c004333ef1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -835,6 +835,18 @@ PrefabInstance:
     - target: {fileID: 4728166154385924403, guid: f4dc34a7cbfebaa40aa8f8c004333ef1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825015922252788066, guid: f4dc34a7cbfebaa40aa8f8c004333ef1, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825015922252788066, guid: f4dc34a7cbfebaa40aa8f8c004333ef1, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825015922252788066, guid: f4dc34a7cbfebaa40aa8f8c004333ef1, type: 3}
+      propertyPath: InitialModule.startRotation.scalar
+      value: 0.30438542
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1576,7 +1588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4257697305568447065, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 54.09396
       objectReference: {fileID: 0}
     - target: {fileID: 4257697305568447065, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_FOVAxisMode
@@ -1584,7 +1596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4257697305568447065, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_FocalLength
-      value: 21.982569
+      value: 15.671067
       objectReference: {fileID: 0}
     - target: {fileID: 4257697305568447065, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_LensShift.x
@@ -1648,11 +1660,11 @@ PrefabInstance:
       objectReference: {fileID: 663483618}
     - target: {fileID: 6826585113004297896, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -183.3
+      value: -383
       objectReference: {fileID: 0}
     - target: {fileID: 6826585113004297896, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.98508
+      value: 58.59
       objectReference: {fileID: 0}
     - target: {fileID: 6826585113004297896, guid: 1911757ccb623c9448bc97db43f5db0c, type: 3}
       propertyPath: m_LocalPosition.z
