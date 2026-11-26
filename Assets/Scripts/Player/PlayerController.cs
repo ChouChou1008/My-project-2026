@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))] //Component를 자동 추가
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     
     
     
-    private const float VelocityDeadZone = 0.05f;
+    private const float VelocityDeadZone = 0.05f;  
 
     private readonly int _speedHash = Animator.StringToHash("Speed");
     private readonly int _verticalSpeedHash = Animator.StringToHash("VerticalSpeed");
@@ -117,16 +117,14 @@ public class PlayerController : MonoBehaviour
             StopHorizontal();
             return;
         }
-
+        if (UpdatePush())
+        {
+            return;
+        }
         if (!_isGround)
         {
             if(IsPushing) EndPush();
             _isJumpRequested = false;
-            return;
-        }
-
-        if (UpdatePush())
-        {
             return;
         }
 
@@ -417,14 +415,14 @@ public class PlayerController : MonoBehaviour
         private bool UpdatePush()
     {
         bool pressingForward = Mathf.Abs(_moveInput.x) > 0.1f &&
-                               Mathf.Sign(_moveInput.x) == _facingX;
+                               Mathf.Sign(_moveInput.x) == _facingX; //보는 방향과 같을 때
 
         if (!IsPushing)
         {
-            if (!pressingForward) return false;
+            if (!pressingForward) return false;  //앞을 안 누름
 
-            PushableBox2D box = FindPushable();
-            if (box == null) return false;
+            PushableBox2D box = FindPushable(); // box 검사
+            if (box == null) return false; 
 
             BeginPush(box);
         }
