@@ -6,6 +6,7 @@ public class OutZone : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private PlayerCamera _playerCamera;
     [SerializeField] private GameObject _globalVolume;
+    [SerializeField] private Renderer _nextMap;              // 도착할 맵의 배경 (Sprite/Mesh 렌더러, 카메라 경계)
 
     [Header("통과 조건 (비우면 조건 없음)")]
     [SerializeField] private ItemData _requiredKey;          // 이 키가 가방에 있어야 통과 (소모하지 않음)
@@ -61,7 +62,7 @@ public class OutZone : MonoBehaviour
         target.position = _teleportPoint.position;
         if (_playerCamera != null)
         {
-            _playerCamera.SnapToTarget();                    // 카메라 즉시 이동 (미끄러지지 않게)
+            _playerCamera.SetBounds(_nextMap);               // 경계 교체 + 카메라 즉시 이동
         }
     }
 }
